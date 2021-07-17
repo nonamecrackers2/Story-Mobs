@@ -12,6 +12,7 @@ public class CommonEventsRegistry {
 
 	@SubscribeEvent
 	public static void onEntityRegistry(RegistryEvent.Register<EntityType<?>> event) {
-		EntityInit.registerEntityAttributes();
+		EntityInit.registerEntityAttributes();	
+		EntityInit.registerEntitySpawnPlacements();
 	}
 }

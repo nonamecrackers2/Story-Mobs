@@ -19,7 +19,7 @@ public class CreederConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnConfigs> getDefaultSpawns() {
 		List<SpawnConfigs> spawns = new ArrayList<SpawnConfigs>();
-		spawns.add(new SpawnConfigs(27, 1, 35, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS,
+		spawns.add(new SpawnConfigs(25, 1, 35, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS,
 				Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU,
 				Biomes.WOODED_BADLANDS_PLATEAU));
 		return spawns;

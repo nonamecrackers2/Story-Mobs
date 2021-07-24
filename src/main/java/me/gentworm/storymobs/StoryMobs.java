@@ -13,7 +13,6 @@ import com.mojang.serialization.Codec;
 import me.gentworm.storymobs.client.RenderHandler;
 import me.gentworm.storymobs.config.ConfigBuilder;
 import me.gentworm.storymobs.config.ConfigGenerator;
-import me.gentworm.storymobs.config.StoryMobsGeneralConfig;
 import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.init.ItemInit;
 import me.gentworm.storymobs.world.ConfiguredStructures;
@@ -43,7 +42,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(StoryMobs.MODID)
-public class StoryMobs {
+public class StoryMobs{
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "storymobs";
@@ -58,20 +57,18 @@ public class StoryMobs {
 		EntityInit.ENTITY_TYPES.register(modEventBus);
 		ItemInit.ITEMS.register(modEventBus);
 		StoryMobsStructures.REGISTER.register(modEventBus);
-		
-		if (StoryMobsGeneralConfig.shouldSpawnPrison.get() == true) {
-			modEventBus.addListener(this::setup);
-		}
+
+		modEventBus.addListener(this::setup);
+
 		// Client event wrap-up in the main class
 		modEventBus.addListener(this::clientSetup);
 
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
 		// World generation like structures, etc
-		if (StoryMobsGeneralConfig.shouldSpawnPrison.get() == true) {
-			forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
-			forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-		}
+		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 

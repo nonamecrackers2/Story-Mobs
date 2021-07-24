@@ -29,4 +29,5 @@ public class CreederRenderer<T extends CreederEntity> extends MobRenderer<T, Cre
 	public ResourceLocation getEntityTexture(T p_110775_1_) {
 		return CREEDER_TEXTURE;
 	}
+	
 }

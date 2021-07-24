@@ -1,5 +1,7 @@
 {
 	"itemGroup.storymobs" : "Story Mobs",
 	"item.storymobs.creeder_spawn_egg" : "Creeder Spawn Egg",
-	"entity.storymobs.creeder": "Creeder"
+	"item.storymobs.eversource_spawn_egg" : "Eversource Spawn Egg",
+	"entity.storymobs.creeder": "Creeder",
+	"entity.storymobs.eversource": "Eversource"
 }

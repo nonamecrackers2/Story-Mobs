@@ -86,15 +86,6 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
-		
-	//TheOneProbe
-    if (findProject(':TheOneProbe') != null) {
-        compile project(':TheOneProbe')
-    } else {
-        compile fg.deobf(project.dependencies.create("mcjty.theoneprobe:TheOneProbe-${top_version}") {
-            transitive = false
-        })
-    }
 	
 	//JEI because it is useful
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")

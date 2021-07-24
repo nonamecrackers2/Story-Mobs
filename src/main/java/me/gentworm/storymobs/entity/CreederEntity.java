@@ -13,7 +13,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.network.datasync.DataParameter;
@@ -34,8 +33,8 @@ public class CreederEntity extends CreeperEntity {
 			DataSerializers.BYTE);
 
 	private int timeSinceIgnited;
-	private double explosionRadius = 7.5D;
-	private int fuseTime = 28;
+	private double explosionRadius = 6.0D;
+	private int fuseTime = 27;
 
 	public CreederEntity(EntityType<? extends CreederEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -44,8 +43,7 @@ public class CreederEntity extends CreeperEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
-		this.goalSelector.addGoal(3, new RandomWalkingGoal(this, 0.35D));
+		this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, 0.4F));
 	}
 
 	@Override
@@ -101,14 +99,14 @@ public class CreederEntity extends CreeperEntity {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 2;
+		return 1;
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.31D)
+		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.35D)
 				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.40D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D);
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D);
 	}
 
 	public boolean isOnLadder() {

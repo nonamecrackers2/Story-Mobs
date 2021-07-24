@@ -7,11 +7,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import me.gentworm.storymobs.StoryMobs;
-import me.gentworm.storymobs.entity.CreederEntity;
 import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.world.StoryMobsStructures;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -170,16 +167,14 @@ public class PrisonStructure extends Structure<NoFeatureConfig> {
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
-			if ("baby".equals(function)) {
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-				CreederEntity entity = EntityInit.CREEDER_ENTITY.get().create(worldIn.getWorld());
-				if (entity != null) {
-					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-					entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null,
-							null);
-					worldIn.addEntity(entity);
-				}
-			}
+			/*
+			 * if ("baby".equals(function)) { worldIn.setBlockState(pos,
+			 * Blocks.AIR.getDefaultState(), 2); CreederEntity entity =
+			 * EntityInit.CREEDER_ENTITY.get().create(worldIn.getWorld()); if (entity !=
+			 * null) { entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+			 * entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos),
+			 * SpawnReason.STRUCTURE, null, null); worldIn.addEntity(entity);
+			 */
 		}
 	}
 }

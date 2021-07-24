@@ -25,10 +25,9 @@ public abstract class ConfigBuilder {
 		if (configFile.exists()) {
 			ConfigBuilder.loadConfigFromFile(configFile);
 			ConfigBuilder.writeConfigToFile(configFile);
-			StoryMobs.LOGGER.debug("Saved the checked/corrected BiomeSpawnConfig");
 		} else {
 			ConfigBuilder.writeConfigToFile(configFile);
-			StoryMobs.LOGGER.debug("No BiomeSpawnConfig was found, created a new one.");
+			StoryMobs.LOGGER.debug("Creating a new config for mob spawning");
 		}
 
 	}
@@ -56,9 +55,9 @@ public abstract class ConfigBuilder {
 		}
 		if (json != null) {
 			EntitySpawnBiomeConfig.deserialize(json);
-			StoryMobs.LOGGER.debug("BiomeSpawnConfig was successfully loaded.");
+			StoryMobs.LOGGER.debug("Config for mob spawns is successful!");
 		} else {
-			StoryMobs.LOGGER.debug("Error loading BiomeSpawnConfig, config hasn't been loaded.");
+			StoryMobs.LOGGER.debug("Config not loaded");
 		}
 	}
 

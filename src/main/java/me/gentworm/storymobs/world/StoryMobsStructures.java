@@ -26,7 +26,7 @@ public class StoryMobsStructures {
 	public static final RegistryObject<Structure<NoFeatureConfig>> PRISON = REGISTER.register("prison", () -> (new PrisonStructure(NoFeatureConfig.field_236558_a_)));
 
 	public static void setupStructures() {
-		setupMapSpacingAndLand(PRISON.get(), new StructureSeparationSettings(100, 50, 2538959), true);
+		setupMapSpacingAndLand(PRISON.get(), new StructureSeparationSettings(80, 50, 2538959), true);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {

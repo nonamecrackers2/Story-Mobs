@@ -27,6 +27,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+
+//A very dangerous buffed creeper and spider hybrid!
 public class CreederEntity extends CreeperEntity {
 
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(CreederEntity.class,
@@ -103,7 +105,7 @@ public class CreederEntity extends CreeperEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.35D)
+		return MonsterEntity.registerAttributes().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.35D)
 				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.40D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D);

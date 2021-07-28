@@ -3,11 +3,9 @@ package me.gentworm.storymobs.world.structure;
 import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import me.gentworm.storymobs.StoryMobs;
-import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.world.StoryMobsStructures;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Mirror;
@@ -21,7 +19,6 @@ import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
@@ -39,17 +36,17 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class PrisonStructure extends Structure<NoFeatureConfig> {
 
-	private static final List<MobSpawnInfo.Spawners> PRISON_ENEMIES = ImmutableList
-			.of(new MobSpawnInfo.Spawners(EntityInit.CREEDER_ENTITY.get(), 1, 1, 1));
+//	private static final List<MobSpawnInfo.Spawners> PRISON_ENEMIES = ImmutableList
+//			.of(new MobSpawnInfo.Spawners(EntityInit.CREEDER_ENTITY.get(), 1, 1, 1));
 
 	public PrisonStructure(Codec<NoFeatureConfig> p_i51440_1_) {
 		super(p_i51440_1_);
 	}
 
-	@Override
-	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
-		return PRISON_ENEMIES;
-	}
+//	@Override
+//	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
+//		return PRISON_ENEMIES;
+//	}
 
 	@Override
 	public String getStructureName() {

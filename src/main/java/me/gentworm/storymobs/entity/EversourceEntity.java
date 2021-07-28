@@ -43,7 +43,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-//A chicken that lays spawn eggs! (very rare)
 public class EversourceEntity extends AnimalEntity {
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(
 			new IItemProvider[] { Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS });
@@ -104,7 +103,7 @@ public class EversourceEntity extends AnimalEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.registerAttributes().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D)
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 
@@ -155,6 +154,11 @@ public class EversourceEntity extends AnimalEntity {
 		playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
 	}
 
+	@Override
+	public AgeableEntity func_241840_a(ServerWorld arg0, AgeableEntity arg1) {
+		return null;
+	}
+
 	public boolean isBreedingItem(ItemStack p_70877_1_) {
 		return TEMPTATION_ITEMS.test(p_70877_1_);
 	}
@@ -176,10 +180,5 @@ public class EversourceEntity extends AnimalEntity {
 
 	public boolean canDespawn(double distanceFromPlayer) {
 		return false;
-	}
-
-	@Override
-	public AgeableEntity func_241840_a(ServerWorld arg0, AgeableEntity arg1) {
-		return null;
 	}
 }

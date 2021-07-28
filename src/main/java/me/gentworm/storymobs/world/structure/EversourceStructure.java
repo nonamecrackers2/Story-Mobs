@@ -123,7 +123,7 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 				List<StructurePiece> pieceList, Random random) {
 			int x = pos.getX();
 			int z = pos.getZ();
-			int y = pos.getY() + 85;
+			int y = pos.getY() + 95;
 			BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
 			BlockPos blockpos = rotationOffSet.add(x, y, z);
 			pieceList.add(new Piece(templateManager,

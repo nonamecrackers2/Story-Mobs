@@ -33,7 +33,7 @@ public class StoryMobsStructures {
 		//Set transformSurroundingLand to true to take the surrounding land
 		//Set to false for surrounding land to not have an impact
 		setupMapSpacingAndLand(PRISON.get(), new StructureSeparationSettings(80, 50, 2538959), true);
-		setupMapSpacingAndLand(EVERSOURCE_STRUCTURE.get(), new StructureSeparationSettings(400, 380, 4857626), false);
+		setupMapSpacingAndLand(EVERSOURCE_STRUCTURE.get(), new StructureSeparationSettings(475, 465, 4857626), false);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {

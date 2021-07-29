@@ -24,7 +24,9 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EversourceStructureModification {
+	
 	public static void biomeModification(final BiomeLoadingEvent event) {
+		//use the static method byName() to pick specific biomes
 		if (event.getCategory() == Biome.Category.FOREST) {
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_EVERSOURCE_STRUCTURE);
 		}

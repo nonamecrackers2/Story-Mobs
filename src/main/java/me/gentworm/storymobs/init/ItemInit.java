@@ -9,16 +9,18 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemInit {
-	
+
 	private static final Properties spawn_egg_props = new Item.Properties().group(MainItemGroup.STORY_MOBS_ITEM_GROUP);
-	
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
-			StoryMobs.MODID);
-	
-	//Spawn eggs
+
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, StoryMobs.MODID);
+
+	// Spawn eggs
 	public static final RegistryObject<Item> CREEDER_SPAWN_EGG = ItemInit.ITEMS.register("creeder_spawn_egg",
 			() -> new SpawnEggItem(EntityInit.creeder, 0x322828, 0xF30909, spawn_egg_props));
-	
+
 	public static final RegistryObject<Item> EVERSOURCE_SPAWN_EGG = ItemInit.ITEMS.register("eversource_spawn_egg",
 			() -> new SpawnEggItem(EntityInit.eversource, 0xDEDEDE, 0xD76C2B, spawn_egg_props));
+
+	public static final RegistryObject<Item> ICY_SPIDER_SPAWN_EGG = ItemInit.ITEMS.register("icy_spider_spawn_egg",
+			() -> new SpawnEggItem(EntityInit.icy_spider, 0x14CCEB, 0xC7EAF0, spawn_egg_props));
 }

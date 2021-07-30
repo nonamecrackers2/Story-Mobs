@@ -2,6 +2,8 @@
 	"itemGroup.storymobs" : "Story Mobs",
 	"item.storymobs.creeder_spawn_egg" : "Creeder Spawn Egg",
 	"item.storymobs.eversource_spawn_egg" : "Eversource Spawn Egg",
+	"item.storymobs.icy_spider_spawn_egg": "Icy Spider Spawn Egg",
 	"entity.storymobs.creeder": "Creeder",
-	"entity.storymobs.eversource": "Eversource"
+	"entity.storymobs.eversource": "Eversource",
+	"entity.storymobs.icy_spider": "Icy Spider"
 }

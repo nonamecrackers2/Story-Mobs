@@ -3,20 +3,19 @@ package me.gentworm.storymobs.init;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class MainItemGroup {
+public class StoryMobsItemGroup {
 
 	public static final ItemGroup STORY_MOBS_ITEM_GROUP = new ItemGroup("storymobs") {
 
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(Items.CREEPER_HEAD);
+			return new ItemStack(ItemInit.STORY_MOBS_LOGO.get());
 		}
 
 		@Override

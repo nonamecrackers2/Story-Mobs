@@ -19,7 +19,7 @@ public class IcySpiderConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnConfigs> getDefaultSpawns() {
 		List<SpawnConfigs> spawns = new ArrayList<SpawnConfigs>();
-		spawns.add(new SpawnConfigs(25, 1, 35, Biomes.ICE_SPIKES, Biomes.SNOWY_BEACH, Biomes.SNOWY_MOUNTAINS,
+		spawns.add(new SpawnConfigs(24, 1, 35, Biomes.ICE_SPIKES, Biomes.SNOWY_BEACH, Biomes.SNOWY_MOUNTAINS,
 				Biomes.SNOWY_TAIGA, Biomes.SNOWY_TAIGA_HILLS, Biomes.SNOWY_TAIGA_MOUNTAINS, Biomes.SNOWY_TUNDRA,
 				Biomes.FROZEN_RIVER, Biomes.FROZEN_OCEAN));
 		return spawns;

@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class PrisonModification {
 	public static void biomeModification(final BiomeLoadingEvent event) {
-		if (event.getCategory() == Biome.Category.PLAINS) {
+		if (event.getCategory() == Biome.Category.FOREST) {
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_PRISON);
 		}
 	}

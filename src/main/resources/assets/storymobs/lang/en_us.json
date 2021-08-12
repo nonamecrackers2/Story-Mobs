@@ -2,8 +2,12 @@
 	"itemGroup.storymobs" : "Story Mobs",
 	"item.storymobs.creeder_spawn_egg" : "Creeder Spawn Egg",
 	"item.storymobs.eversource_spawn_egg" : "Eversource Spawn Egg",
-	"item.storymobs.icy_spider_spawn_egg": "Icy Spider Spawn Egg",
-	"entity.storymobs.creeder": "Creeder",
-	"entity.storymobs.eversource": "Eversource",
-	"entity.storymobs.icy_spider": "Icy Spider"
+	"item.storymobs.icy_spider_spawn_egg" : "Icy Spider Spawn Egg",
+	"item.storymobs.black_wolf_spawn_egg" : "Black Wolf Spawn Egg",
+	"item.storymobs.red_slime_spawn_egg" : "Red Slime Spawn Egg",
+	"entity.storymobs.creeder" : "Creeder",
+	"entity.storymobs.eversource" : "Eversource",
+	"entity.storymobs.icy_spider" : "Icy Spider",
+	"entity.storymobs.black_wolf" : "Black Wolf",
+	"entity.storymobs.red_slime" : "Red Slime"
 }

@@ -28,6 +28,7 @@ public class CommonEventsRegistry {
 		EntityInit.registerEntitySpawnPlacements();
 	}
 
+	//Setup of the structures
 	public static void setup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			StoryMobsStructures.setupStructures();

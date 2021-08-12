@@ -3,11 +3,18 @@ package me.gentworm.storymobs.world.structure;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import me.gentworm.storymobs.StoryMobs;
+import me.gentworm.storymobs.entity.PrisonZombieEntity;
+import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.world.StoryMobsStructures;
+import net.minecraft.block.Blocks;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -19,6 +26,7 @@ import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
@@ -36,17 +44,17 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class PrisonStructure extends Structure<NoFeatureConfig> {
 
-//	private static final List<MobSpawnInfo.Spawners> PRISON_ENEMIES = ImmutableList
-//			.of(new MobSpawnInfo.Spawners(EntityInit.CREEDER_ENTITY.get(), 1, 1, 1));
+	private static final List<MobSpawnInfo.Spawners> PRISON_ENEMIES = ImmutableList
+			.of(new MobSpawnInfo.Spawners(EntityInit.PRISON_ZOMBIE_ENTITY.get(), 1, 1, 1));
 
 	public PrisonStructure(Codec<NoFeatureConfig> p_i51440_1_) {
 		super(p_i51440_1_);
 	}
 
-//	@Override
-//	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
-//		return PRISON_ENEMIES;
-//	}
+	@Override
+	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
+		return PRISON_ENEMIES;
+	}
 
 	@Override
 	public String getStructureName() {
@@ -130,8 +138,8 @@ public class PrisonStructure extends Structure<NoFeatureConfig> {
 			int z = pos.getZ();
 			BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
 			BlockPos blockpos = rotationOffSet.add(x, pos.getY(), z);
-			pieceList
-					.add(new Piece(templateManager, new ResourceLocation(StoryMobs.MODID, "prison/cell"), blockpos, rotation));
+			pieceList.add(new Piece(templateManager, new ResourceLocation(StoryMobs.MODID, "prison/cell"), blockpos,
+					rotation));
 		}
 
 		private void setupPiece(TemplateManager templateManager) {
@@ -164,14 +172,17 @@ public class PrisonStructure extends Structure<NoFeatureConfig> {
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
-			/*
-			 * if ("baby".equals(function)) { worldIn.setBlockState(pos,
-			 * Blocks.AIR.getDefaultState(), 2); CreederEntity entity =
-			 * EntityInit.CREEDER_ENTITY.get().create(worldIn.getWorld()); if (entity !=
-			 * null) { entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			 * entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos),
-			 * SpawnReason.STRUCTURE, null, null); worldIn.addEntity(entity);
-			 */
+			
+			PrisonZombieEntity entity = EntityInit.PRISON_ZOMBIE_ENTITY.get().create(worldIn.getWorld());
+
+			if ("chest".equals(function)) {
+				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				TileEntity tileentity = worldIn.getTileEntity(pos.down());
+				if (tileentity instanceof ChestTileEntity) {
+					((ChestTileEntity) tileentity).setLootTable(LootTables.CHESTS_SIMPLE_DUNGEON, rand.nextLong());
+				}
+			}
+			worldIn.addEntity(entity);
 		}
 	}
 }

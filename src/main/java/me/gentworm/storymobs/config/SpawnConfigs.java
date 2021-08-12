@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
+//Some Code used from other mods
 public final class SpawnConfigs {
 
 	public int weight;

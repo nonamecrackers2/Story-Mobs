@@ -15,7 +15,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 // Exported for Minecraft version 1.15 - 1.16 with MCP mappings
 // Paste this class into your mod and generate all required imports
 
-
 @OnlyIn(Dist.CLIENT)
 public class CreederModel<T extends Entity> extends SegmentedModel<T> {
 	private final ModelRenderer main;
@@ -34,7 +33,6 @@ public class CreederModel<T extends Entity> extends SegmentedModel<T> {
 
 		main = new ModelRenderer(this);
 		main.setRotationPoint(0.0F, 10.3F, 0.0F);
-		
 
 		leg2 = new ModelRenderer(this);
 		leg2.setRotationPoint(4.0F, 1.0F, 1.0F);
@@ -84,7 +82,8 @@ public class CreederModel<T extends Entity> extends SegmentedModel<T> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
+			float green, float blue, float alpha) {
 		main.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
@@ -96,7 +95,8 @@ public class CreederModel<T extends Entity> extends SegmentedModel<T> {
 
 	@Override
 	public Iterable<ModelRenderer> getParts() {
-		return (Iterable<ModelRenderer>) ImmutableList.of(this.head, this.body, this.leg1, this.leg2, this.leg3, this.leg4, this.leg5, this.leg6);
+		return (Iterable<ModelRenderer>) ImmutableList.of(this.head, this.body, this.leg1, this.leg2, this.leg3,
+				this.leg4, this.leg5, this.leg6);
 	}
 
 	@Override

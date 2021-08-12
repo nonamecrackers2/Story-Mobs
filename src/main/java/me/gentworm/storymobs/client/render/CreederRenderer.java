@@ -13,8 +13,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CreederRenderer<T extends CreederEntity> extends MobRenderer<T, CreederModel<T>> {
-	private static final ResourceLocation CREEDER_TEXTURE = new ResourceLocation(
-			StoryMobs.MODID, "textures/entity/creeder/creeder.png");
+	private static final ResourceLocation CREEDER_TEXTURE = new ResourceLocation(StoryMobs.MODID,
+			"textures/entity/creeder/creeder.png");
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public CreederRenderer(EntityRendererManager p_i46139_1_) {
@@ -29,5 +29,5 @@ public class CreederRenderer<T extends CreederEntity> extends MobRenderer<T, Cre
 	public ResourceLocation getEntityTexture(T p_110775_1_) {
 		return CREEDER_TEXTURE;
 	}
-	
+
 }

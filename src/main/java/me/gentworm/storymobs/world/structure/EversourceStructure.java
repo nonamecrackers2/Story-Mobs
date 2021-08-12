@@ -6,8 +6,14 @@ import java.util.Random;
 import com.mojang.serialization.Codec;
 
 import me.gentworm.storymobs.StoryMobs;
+import me.gentworm.storymobs.entity.EversourceEntity;
+import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.world.StoryMobsStructures;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -45,31 +51,18 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 		return StoryMobs.MODID + ":eversource_structure";
 	}
 
-	protected boolean isFeatureChunk(ChunkGenerator p_230363_1_, BiomeProvider p_230363_2_, long p_230363_3_,
-			SharedSeedRandom p_230363_5_, int p_230363_6_, int p_230363_7_, Biome p_230363_8_, ChunkPos p_230363_9_,
-			NoFeatureConfig p_230363_10_) {
-
-		int i = p_230363_6_ >> 4;
-		int j = p_230363_7_ >> 4;
-		p_230363_5_.setSeed((long) (i ^ j << 4) ^ p_230363_3_);
-		p_230363_5_.nextInt();
-		for (int k = p_230363_6_ - 10; k <= p_230363_6_ + 10; ++k) {
-			for (int l = p_230363_7_ - 10; l <= p_230363_7_ + 10; ++l) {
-				ChunkPos chunkpos = Structure.VILLAGE.getChunkPosForStructure(
-						p_230363_1_.func_235957_b_().func_236197_a_(Structure.VILLAGE), p_230363_3_, p_230363_5_, k, l);
-				if (k == chunkpos.x && l == chunkpos.z) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	//Late decoration stage after vegetal decoration so that the structure don't got trees
+	// Late decoration stage after vegetal decoration so that the structure don't
+	// got trees
 	@Override
 	public GenerationStage.Decoration getDecorationStage() {
 		return GenerationStage.Decoration.TOP_LAYER_MODIFICATION;
 	}
+	
+	@Override
+    protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeProvider, long seed, SharedSeedRandom random, int x, int z, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
+        random.setLargeFeatureSeed(seed, x, z);
+        return random.nextDouble() < 0.003;
+    }
 
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
@@ -117,7 +110,7 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 			this.setupPiece(templateManagerIn);
 
 		}
-		
+
 		public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation,
 				List<StructurePiece> pieceList, Random random) {
 			int x = pos.getX();
@@ -164,7 +157,25 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
-
+			if ("chest".equals(function)) {
+				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				TileEntity tileentity = worldIn.getTileEntity(pos.down());
+				if (tileentity instanceof ChestTileEntity) {
+					((ChestTileEntity) tileentity).setLootTable(
+							new ResourceLocation(StoryMobs.MODID, "chests/eversource_structure/eversource"),
+							rand.nextLong());
+				}
+			}
+			if ("eversource_entity".equals(function)) {
+				EversourceEntity entity = EntityInit.EVERSOURCE_ENTITY.get().create(worldIn.getWorld());
+				if (entity != null) {
+					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null,
+							null);
+					worldIn.addEntity(entity);
+				}
+				worldIn.setBlockState(pos, Blocks.OAK_PLANKS.getDefaultState(), 2);
+			}
 		}
 	}
 }

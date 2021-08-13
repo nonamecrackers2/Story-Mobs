@@ -1,4 +1,4 @@
-package me.gentworm.storymobs.world;
+package me.gentworm.storymobs.init;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

@@ -8,7 +8,7 @@ import com.mojang.serialization.Codec;
 import me.gentworm.storymobs.StoryMobs;
 import me.gentworm.storymobs.entity.EversourceEntity;
 import me.gentworm.storymobs.init.EntityInit;
-import me.gentworm.storymobs.world.StoryMobsStructures;
+import me.gentworm.storymobs.init.StoryMobsStructures;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;

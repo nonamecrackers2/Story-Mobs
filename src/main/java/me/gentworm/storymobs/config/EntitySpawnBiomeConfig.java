@@ -14,8 +14,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import me.gentworm.storymobs.StoryMobs;
-import me.gentworm.storymobs.config.entity.CreederConfig;
-import me.gentworm.storymobs.config.entity.IcySpiderConfig;
+import me.gentworm.storymobs.config.entity.CreederSpawnConfig;
+import me.gentworm.storymobs.config.entity.IcySpiderSpawnConfig;
+import me.gentworm.storymobs.config.entity.BlackWolfSpawnConfig;
+import me.gentworm.storymobs.config.entity.RedSlimeSpawnConfig;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -99,8 +101,10 @@ public final class EntitySpawnBiomeConfig {
 
 	private static Map<String, Supplier<List<SpawnConfigs>>> getEntityConfigEntries() {
 		Map<String, Supplier<List<SpawnConfigs>>> names = new HashMap<>();
-		names.put("storymobs:creeder", CreederConfig::getDefaultSpawns);
-		names.put("storymobs:icy_spider", IcySpiderConfig::getDefaultSpawns);
+		names.put("storymobs:creeder", CreederSpawnConfig::getDefaultSpawns);
+		names.put("storymobs:icy_spider", IcySpiderSpawnConfig::getDefaultSpawns);
+		names.put("storymobs:black_wolf", BlackWolfSpawnConfig::getDefaultSpawns);
+		names.put("storymobs:red_slime", RedSlimeSpawnConfig::getDefaultSpawns);
 		return names;
 	}
 

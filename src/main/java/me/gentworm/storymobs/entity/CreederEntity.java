@@ -35,7 +35,7 @@ public class CreederEntity extends CreeperEntity {
 			DataSerializers.BYTE);
 
 	private int timeSinceIgnited;
-	private double explosionRadius = 3.9D;
+	private double explosionRadius = 4.5D;
 	private int fuseTime = 27;
 
 	public CreederEntity(EntityType<? extends CreederEntity> type, World worldIn) {

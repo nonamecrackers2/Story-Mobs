@@ -8,11 +8,9 @@ import me.gentworm.storymobs.config.ConfigBuilder;
 import me.gentworm.storymobs.event.CommonEventsRegistry;
 import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.init.ItemInit;
-import me.gentworm.storymobs.world.StoryMobsStructures;
-import me.gentworm.storymobs.world.modification.EversourceStructureModification;
-import me.gentworm.storymobs.world.modification.PrisonModification;
+import me.gentworm.storymobs.init.ParticleInit;
+import me.gentworm.storymobs.init.StoryMobsStructures;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -32,22 +30,15 @@ public class StoryMobs {
 		// Register general, miscellaneous things
 		EntityInit.ENTITY_TYPES.register(modEventBus);
 		ItemInit.ITEMS.register(modEventBus);
+		ParticleInit.PARTICLES.register(modEventBus);
 		StoryMobsStructures.REGISTER.register(modEventBus);
 
 		modEventBus.addListener(CommonEventsRegistry::setup);
 
 		// Client event wrap-up in the main class
 		modEventBus.addListener(this::clientSetup);
-
-		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-
-		// Prison structure
-		forgeBus.addListener(EventPriority.NORMAL, PrisonModification::addDimensionalSpacing);
-		forgeBus.addListener(EventPriority.HIGH, PrisonModification::biomeModification);
-
-		// Eversource structure
-		forgeBus.addListener(EventPriority.NORMAL, EversourceStructureModification::addDimensionalSpacing);
-		forgeBus.addListener(EventPriority.HIGH, EversourceStructureModification::biomeModification);
+		
+		CommonEventsRegistry.registerStructuresInWorld();
 
 		MinecraftForge.EVENT_BUS.register(this);
 	}

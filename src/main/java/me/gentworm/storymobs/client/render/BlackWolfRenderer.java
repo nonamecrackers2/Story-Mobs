@@ -9,7 +9,6 @@ import me.gentworm.storymobs.entity.BlackWolfEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,7 +30,7 @@ public class BlackWolfRenderer extends MobRenderer<BlackWolfEntity, BlackWolfMod
 		addLayer(new BlackWolfCollarLayer(this));
 	}
 
-	protected float handleRotationFloat(WolfEntity p_77044_1_, float p_77044_2_) {
+	protected float handleRotationFloat(BlackWolfEntity p_77044_1_, float p_77044_2_) {
 		return p_77044_1_.getTailRotation();
 	}
 

@@ -7,8 +7,8 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 
 import me.gentworm.storymobs.StoryMobs;
+import me.gentworm.storymobs.init.StoryMobsStructures;
 import me.gentworm.storymobs.world.ConfiguredStructures;
-import me.gentworm.storymobs.world.StoryMobsStructures;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;

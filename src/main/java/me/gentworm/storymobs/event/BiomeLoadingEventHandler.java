@@ -19,12 +19,10 @@ public class BiomeLoadingEventHandler {
 	private static Map<ResourceLocation, Map<EntityClassification, List<Spawners>>> biomeSpawnMap;
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
-	public static void onBiomeLoading(BiomeLoadingEvent event) {
-
+	public static void onBiomeLoad(BiomeLoadingEvent event) {
 		if (biomeSpawnMap == null) {
 			biomeSpawnMap = EntitySpawnBiomeConfig.getBiomeSpawnMap();
 		}
-
 		if (biomeSpawnMap.containsKey(event.getName())) {
 			Map<EntityClassification, List<Spawners>> classificationMap = biomeSpawnMap.get(event.getName());
 			for (Map.Entry<EntityClassification, List<Spawners>> entry : classificationMap.entrySet()) {

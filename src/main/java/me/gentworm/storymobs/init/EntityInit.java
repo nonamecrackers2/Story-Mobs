@@ -13,6 +13,7 @@ import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -72,5 +73,9 @@ public class EntityInit {
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CreederEntity::canCreederSpawn);
 		EntitySpawnPlacementRegistry.register(ICY_SPIDER_ENTITY.get(), PlacementType.ON_GROUND,
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IcySpiderEntity::canIcySpiderSpawn);
+		EntitySpawnPlacementRegistry.register(BLACK_WOLF_ENTITY.get(), PlacementType.ON_GROUND,
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(RED_SLIME_ENTITY.get(), PlacementType.ON_GROUND,
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RedSlimeEntity::canRedSlimeSpawn);
 	}
 }

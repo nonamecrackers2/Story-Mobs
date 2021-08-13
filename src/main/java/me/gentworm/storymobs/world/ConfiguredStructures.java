@@ -1,6 +1,7 @@
 package me.gentworm.storymobs.world;
 
 import me.gentworm.storymobs.StoryMobs;
+import me.gentworm.storymobs.init.StoryMobsStructures;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;

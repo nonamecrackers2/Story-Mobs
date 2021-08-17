@@ -1,0 +1,15 @@
+               --- 1.1.0 ---
+- Added glowing icy spider texture
+- Changed texture of creative tab icon
+- Added Loot for all structures
+- Changed how eversource structure looks
+- Fixed prison spawning in same biomes as eversource structure
+- Added prison zombie
+- Added black wolf mob
+- Added red slime
+- Lowered creeder's explosion strength
+- New structure:
+- Better creeder explosion animations
+- New particle (for red slime)
+- A few quality-of-life changes
+- Eversource now lays spawn eggs more often

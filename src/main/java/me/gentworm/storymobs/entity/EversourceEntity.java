@@ -1,8 +1,5 @@
 package me.gentworm.storymobs.entity;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import me.gentworm.storymobs.StoryMobs;
@@ -66,8 +63,6 @@ public class EversourceEntity extends AnimalEntity {
 			Items.ZOMBIE_HORSE_SPAWN_EGG, Items.ZOMBIE_SPAWN_EGG, Items.ZOMBIE_VILLAGER_SPAWN_EGG,
 			Items.ZOMBIFIED_PIGLIN_SPAWN_EGG };
 
-	List<Item> eggItemsList = Arrays.asList(eggItems);
-
 	public float wingRotation;
 
 	public float destPos;
@@ -120,10 +115,9 @@ public class EversourceEntity extends AnimalEntity {
 		if (!this.onGround && lvt_1_1_.y < 0.0D)
 			setMotion(lvt_1_1_.mul(1.0D, 0.6D, 1.0D));
 		this.wingRotation += this.wingRotDelta * 2.0F;
-		if (!this.world.isRemote && isAlive() && (--this.timeUntilNextEgg == 0)) {
+		if (!this.world.isRemote && isAlive() && (this.rand.nextInt() <= 2)) {
 			playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F,
 					(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-			Collections.shuffle(eggItemsList);
 
 			Random rand = new Random();
 

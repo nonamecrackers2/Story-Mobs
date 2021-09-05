@@ -20,7 +20,7 @@ public class StoryMobs {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "storymobs";
-	
+
 	public StoryMobs() {
 
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -35,7 +35,7 @@ public class StoryMobs {
 
 		// Client event wrap-up in the main class
 		modEventBus.addListener(this::clientSetup);
-		
+
 		CommonEventsRegistry.registerStructuresInWorld();
 
 		MinecraftForge.EVENT_BUS.register(this);

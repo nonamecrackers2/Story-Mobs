@@ -4,6 +4,7 @@ import me.gentworm.storymobs.StoryMobs;
 import me.gentworm.storymobs.entity.BlackWolfEntity;
 import me.gentworm.storymobs.entity.CreederEntity;
 import me.gentworm.storymobs.entity.EversourceEntity;
+import me.gentworm.storymobs.entity.GiantGhastEntity;
 import me.gentworm.storymobs.entity.IcySpiderEntity;
 import me.gentworm.storymobs.entity.PrisonZombieEntity;
 import me.gentworm.storymobs.entity.RedSlimeEntity;
@@ -36,6 +37,8 @@ public class EntityInit {
 			BlackWolfEntity::new, EntityClassification.CREATURE, 0.6F, 0.85F);
 	public static final EntityType<RedSlimeEntity> red_slime = createStandardEntityType("red_slime",
 			RedSlimeEntity::new, EntityClassification.MONSTER, 2.04F, 2.04F);
+	public static final EntityType<GiantGhastEntity> giant_ghast = createStandardEntityType("giant_slime",
+			GiantGhastEntity::new, EntityClassification.MONSTER, 2.04F, 2.04F);
 
 	// Register Entities
 	public static final RegistryObject<EntityType<CreederEntity>> CREEDER_ENTITY = ENTITY_TYPES.register("creeder",
@@ -50,6 +53,8 @@ public class EntityInit {
 			.register("black_wolf", () -> black_wolf);
 	public static final RegistryObject<EntityType<RedSlimeEntity>> RED_SLIME_ENTITY = ENTITY_TYPES.register("red_slime",
 			() -> red_slime);
+	public static final RegistryObject<EntityType<GiantGhastEntity>> GIANT_GHAST_ENTITY = ENTITY_TYPES.register("giant_ghast",
+			() -> giant_ghast);
 
 	// Special method to register entities
 	private static <T extends Entity> EntityType<T> createStandardEntityType(String entity_name,
@@ -65,6 +70,7 @@ public class EntityInit {
 		GlobalEntityTypeAttributes.put(ICY_SPIDER_ENTITY.get(), IcySpiderEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(BLACK_WOLF_ENTITY.get(), BlackWolfEntity.func_234233_eS_().create());
 		GlobalEntityTypeAttributes.put(RED_SLIME_ENTITY.get(), RedSlimeEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(GIANT_GHAST_ENTITY.get(), GiantGhastEntity.getAttributes().create());
 	}
 
 	// Spawn placements
@@ -77,5 +83,7 @@ public class EntityInit {
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(RED_SLIME_ENTITY.get(), PlacementType.ON_GROUND,
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RedSlimeEntity::canRedSlimeSpawn);
+		//EntitySpawnPlacementRegistry.register(GIANT_GHAST_ENTITY.get(), PlacementType.NO_RESTRICTIONS,
+				//Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GiantGhastEntity::canGiantGhastSpawn);
 	}
 }

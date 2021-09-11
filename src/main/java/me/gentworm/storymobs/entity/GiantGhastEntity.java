@@ -11,7 +11,6 @@ import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
@@ -27,11 +26,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -113,13 +109,7 @@ public class GiantGhastEntity extends FlyingEntity implements IMob {
 	protected float getSoundVolume() {
 		return 5.0F;
 	}
-
-	public static boolean func_223368_b(EntityType<GiantGhastEntity> p_223368_0_, IWorld p_223368_1_,
-			SpawnReason p_223368_2_, BlockPos p_223368_3_, Random p_223368_4_) {
-		return (p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
-				&& canSpawnOn(p_223368_0_, p_223368_1_, p_223368_2_, p_223368_3_, p_223368_4_));
-	}
-
+	
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}

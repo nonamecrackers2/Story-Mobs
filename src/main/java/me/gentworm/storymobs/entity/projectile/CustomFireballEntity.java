@@ -1,62 +1,64 @@
 package me.gentworm.storymobs.entity.projectile;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+import me.gentworm.storymobs.entity.GiantGhastEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractFireballEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class CustomFireballEntity extends AbstractFireballEntity {
-	public int explosionPower = 1;
+/**
+ * Code from:
+ * https://github.com/TeamTwilight/twilightforest/blob/1.16.x/src/main/java/twilightforest/entity/boss/UrGhastFireballEntity.java
+ * 
+ * @apiNote Twilight Forest
+ *
+ */
 
-	public CustomFireballEntity(World p_i1769_1_, LivingEntity p_i1769_2_, double p_i1769_3_, double p_i1769_5_,
-			double p_i1769_7_) {
-		super(EntityType.FIREBALL, p_i1769_2_, p_i1769_3_, p_i1769_5_, p_i1769_7_, p_i1769_1_);
+public class CustomFireballEntity extends FireballEntity {
+
+	public CustomFireballEntity(World world, GiantGhastEntity entityTFTowerBoss, double x, double y, double z) {
+		super(world, entityTFTowerBoss, x, y, z);
 	}
 
+	// [VanillaCopy] super, edits noted
 	@Override
-	protected void onImpact(RayTraceResult p_70227_1_) {
-		super.onImpact(p_70227_1_);
-		if (!this.world.isRemote) {
-			boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, func_234616_v_());
-			this.world.createExplosion((Entity) null, getPosX(), getPosY(), getPosZ(), this.explosionPower, flag,
-					flag ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+	protected void onImpact(RayTraceResult result) {
+		// TF - don't collide with other fireballs
+		if (result instanceof EntityRayTraceResult) {
+			if (!this.world.isRemote
+					&& !(((EntityRayTraceResult) result).getEntity() instanceof DamagingProjectileEntity)) {
+				if (((EntityRayTraceResult) result).getEntity() != null) {
+					// TF - up damage by 10
+					((EntityRayTraceResult) result).getEntity()
+							.attackEntityFrom(DamageSource.func_233547_a_(this, this.func_234616_v_()), 16.0F);
+					this.applyEnchantments((LivingEntity) this.func_234616_v_(),
+							((EntityRayTraceResult) result).getEntity());
+				}
+
+				boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this.func_234616_v_());
+				this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), this.explosionPower,
+						flag, flag ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
+				this.remove();
+			}
 		}
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		super.onEntityHit(p_213868_1_);
-		if (!this.world.isRemote) {
-			Entity entity = p_213868_1_.getEntity();
-			Entity entity1 = func_234616_v_();
-			entity.attackEntityFrom(DamageSource.func_233547_a_(this, entity1), 6.0F);
-			if (entity instanceof CustomFireballEntity || entity1 instanceof CustomFireballEntity)
-				return;
-			if (entity1 instanceof LivingEntity)
-				applyEnchantments((LivingEntity) entity1, entity);
-		}
-	}
-
-	public void writeAdditional(CompoundNBT p_213281_1_) {
-		super.writeAdditional(p_213281_1_);
-		p_213281_1_.putInt("ExplosionPower", this.explosionPower);
-	}
-
-	public void readAdditional(CompoundNBT p_70037_1_) {
-		super.readAdditional(p_70037_1_);
-		if (p_70037_1_.contains("ExplosionPower", 99))
-			this.explosionPower = p_70037_1_.getInt("ExplosionPower");
-	}
-
-	@Override
-	public boolean canBeCollidedWith() {
-		return false;
+	public void shoot(double x, double y, double z, float scale, float dist) {
+		Vector3d vec3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * dist,
+				this.rand.nextGaussian() * 0.0075F * dist, this.rand.nextGaussian() * 0.0075F * dist).scale(scale);
+		this.setMotion(vec3d);
+		float f = MathHelper.sqrt(horizontalMag(vec3d));
+		this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, z) * (180F / (float) Math.PI));
+		this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, f) * (180F / (float) Math.PI));
+		this.prevRotationYaw = this.rotationYaw;
+		this.prevRotationPitch = this.rotationPitch;
 	}
 }

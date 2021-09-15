@@ -109,7 +109,7 @@ public class GiantGhastEntity extends FlyingEntity implements IMob {
 	protected float getSoundVolume() {
 		return 5.0F;
 	}
-	
+
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}
@@ -263,25 +263,25 @@ public class GiantGhastEntity extends FlyingEntity implements IMob {
 					if (!this.parentEntity.isSilent())
 						lvt_4_1_.playEvent(null, 1016, this.parentEntity.getPosition(), 0);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire1 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire2 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire3 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire4 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire5 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire6 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire7 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire8 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire9 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 					me.gentworm.storymobs.entity.projectile.CustomFireballEntity fire10 = new me.gentworm.storymobs.entity.projectile.CustomFireballEntity(
-							lvt_4_1_, (LivingEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
+							lvt_4_1_, (GiantGhastEntity) this.parentEntity, lvt_8_1_, lvt_10_1_, lvt_12_1_);
 
 					fire1.explosionPower = this.parentEntity.getFireballStrength();
 					fire1.setPosition(this.parentEntity.getPosX() + lvt_7_1_.x * 4.0D,
@@ -344,4 +344,5 @@ public class GiantGhastEntity extends FlyingEntity implements IMob {
 	protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
 		return 2.6F;
 	}
+	
 }

@@ -1,6 +1,7 @@
 package me.gentworm.storymobs.entity.projectile;
 
 import me.gentworm.storymobs.entity.GiantGhastEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.FireballEntity;
@@ -11,14 +12,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  * Code from:
  * https://github.com/TeamTwilight/twilightforest/blob/1.16.x/src/main/java/twilightforest/entity/boss/UrGhastFireballEntity.java
  * 
  * @apiNote Twilight Forest
- *
  */
 
 public class CustomFireballEntity extends FireballEntity {
@@ -31,6 +30,13 @@ public class CustomFireballEntity extends FireballEntity {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		// TF - don't collide with other fireballs
+		if (!this.world.isRemote) {
+			boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world,
+					this.func_234616_v_());
+			this.world.createExplosion((Entity) null, this.getPosX(), this.getPosY(), this.getPosZ(),
+					(float) this.explosionPower, flag, flag ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+			this.remove();
+		}
 		if (result instanceof EntityRayTraceResult) {
 			if (!this.world.isRemote
 					&& !(((EntityRayTraceResult) result).getEntity() instanceof DamagingProjectileEntity)) {
@@ -41,11 +47,6 @@ public class CustomFireballEntity extends FireballEntity {
 					this.applyEnchantments((LivingEntity) this.func_234616_v_(),
 							((EntityRayTraceResult) result).getEntity());
 				}
-
-				boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this.func_234616_v_());
-				this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), this.explosionPower,
-						flag, flag ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
-				this.remove();
 			}
 		}
 	}
@@ -60,5 +61,10 @@ public class CustomFireballEntity extends FireballEntity {
 		this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, f) * (180F / (float) Math.PI));
 		this.prevRotationYaw = this.rotationYaw;
 		this.prevRotationPitch = this.rotationPitch;
+	}
+
+	@Override
+	public boolean canCollide(Entity entity) {
+		return false;
 	}
 }

@@ -5,12 +5,12 @@ issueTrackerURL=""
  
 [[mods]]  
 modId="storymobs"  
-version="1.16.5-1.1.0"  
+version="1.16.5-1.1.1"  
 displayName="Story Mobs"  
 updateJSONURL=""  
 displayURL="https://www.curseforge.com/minecraft/mc-mods/story-mobs"  
 logoFile="storymobs_logo.png"  
-credits="Vaguely Interesting for the art, GentWorm for writing the code, Swagboi7 for structure designs and ideas"  
+credits="Vaguely Interesting for the art, GentWorm and nonamecrackers2 for writing the code, Swagboi7 for structure designs and ideas"  
 authors="Vaguely Interesting, GentWorm, Swagboi7"  
 description='''
 This mod adds mobs from Minecraft: Story Mode into the game!

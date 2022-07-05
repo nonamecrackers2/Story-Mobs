@@ -32,9 +32,9 @@ public class ItemInit {
 			() -> new SpawnEggItem(EntityInit.prison_zombie, 0x009B12, 0xFFD310, SPAWN_EGG_PROPERTIES));
 
 	public static final RegistryObject<SpawnEggItem> BLACK_WOLF_SPAWN_EGG = ITEMS.register("black_wolf_spawn_egg",
-			() -> new SpawnEggItem(EntityInit.black_wolf, 0x009B12, 0xFFD310, SPAWN_EGG_PROPERTIES));
+			() -> new SpawnEggItem(EntityInit.black_wolf, 0x161616, 0xf9f9f9, SPAWN_EGG_PROPERTIES));
 	
 	public static final RegistryObject<SpawnEggItem> RED_SLIME_SPAWN_EGG = ITEMS.register("red_slime_spawn_egg",
-			() -> new SpawnEggItem(EntityInit.red_slime, 0x009B12, 0xFFD310, SPAWN_EGG_PROPERTIES));
+			() -> new SpawnEggItem(EntityInit.red_slime, 0xbc0000, 0x2b2121, SPAWN_EGG_PROPERTIES));
 
 }

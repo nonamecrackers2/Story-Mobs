@@ -15,9 +15,8 @@ public class EversourceRenderer extends MobRenderer<EversourceEntity, Eversource
 	private static final ResourceLocation EVERSOURCE_TEXTURE = new ResourceLocation(StoryMobs.MODID,
 			"textures/entity/eversource/eversource.png");
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public EversourceRenderer(EntityRendererManager manager) {
-		super(manager, new EversourceModel(), 0.3F);
+		super(manager, new EversourceModel<>(), 0.3F);
 	}
 
 	@Override

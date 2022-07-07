@@ -1,7 +1,7 @@
 buildscript {
 
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/maven' }
         maven { url "https://maven.tterrag.com/" }
         jcenter()
@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
         
     }
@@ -22,7 +22,7 @@ apply plugin: 'maven-publish'
 
 version = "${mod_version}"
 group = 'me.gentworm.storymobs'
-archivesBaseName = 'storymobs'
+archivesBaseName = 'storymod'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -86,6 +86,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 	
 	//JEI because it is useful
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")

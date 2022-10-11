@@ -1,7 +1,7 @@
 package me.gentworm.storymobs.client.model;
 
 import me.gentworm.storymobs.entity.PrisonZombieEntity;
-import net.minecraft.client.renderer.entity.model.AbstractZombieModel;
+import net.minecraft.client.model.AbstractZombieModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

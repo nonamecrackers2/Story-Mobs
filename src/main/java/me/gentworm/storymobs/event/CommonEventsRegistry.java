@@ -11,11 +11,11 @@ import me.gentworm.storymobs.init.StoryMobsStructures;
 import me.gentworm.storymobs.world.ConfiguredStructures;
 import me.gentworm.storymobs.world.modification.EversourceStructureModification;
 import me.gentworm.storymobs.world.modification.PrisonModification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -52,24 +52,24 @@ public class CommonEventsRegistry {
 			StoryMobsStructures.registerStructurePieces();
 			ConfiguredStructures.registerConfiguredStructures();
 
-			WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
-				Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().getStructures()
-						.func_236195_a_();
+			BuiltinRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
+				Map<StructureFeature<?>, StructureFeatureConfiguration> structureMap = settings.getValue().structureSettings()
+						.structureConfig();
 
 				if (structureMap instanceof ImmutableMap) {
-					Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(structureMap);
+					Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(structureMap);
 					tempMap.put(StoryMobsStructures.PRISON.get(),
-							DimensionStructuresSettings.field_236191_b_.get(StoryMobsStructures.PRISON.get()));
+							StructureSettings.DEFAULTS.get(StoryMobsStructures.PRISON.get()));
 
 					tempMap.put(StoryMobsStructures.EVERSOURCE_STRUCTURE.get(),
-							DimensionStructuresSettings.field_236191_b_
+							StructureSettings.DEFAULTS
 									.get(StoryMobsStructures.EVERSOURCE_STRUCTURE.get()));
-					settings.getValue().getStructures().field_236193_d_ = tempMap;
+					settings.getValue().structureSettings().structureConfig = tempMap;
 				} else {
 					structureMap.put(StoryMobsStructures.PRISON.get(),
-							DimensionStructuresSettings.field_236191_b_.get(StoryMobsStructures.PRISON.get()));
+							StructureSettings.DEFAULTS.get(StoryMobsStructures.PRISON.get()));
 					structureMap.put(StoryMobsStructures.EVERSOURCE_STRUCTURE.get(),
-							DimensionStructuresSettings.field_236191_b_
+							StructureSettings.DEFAULTS
 									.get(StoryMobsStructures.EVERSOURCE_STRUCTURE.get()));
 				}
 			});

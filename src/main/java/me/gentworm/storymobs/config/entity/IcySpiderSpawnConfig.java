@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.gentworm.storymobs.config.SpawnConfigs;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class IcySpiderSpawnConfig {
@@ -16,6 +16,7 @@ public class IcySpiderSpawnConfig {
 		builder.pop();
 	}
 
+	//TODO: Find biome replacements
 	@SuppressWarnings("unchecked")
 	public static List<SpawnConfigs> getDefaultSpawns() {
 		List<SpawnConfigs> spawns = new ArrayList<SpawnConfigs>();

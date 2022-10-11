@@ -1,9 +1,9 @@
 package me.gentworm.storymobs.init;
 
 import me.gentworm.storymobs.StoryMobs;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.Properties;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -11,12 +11,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemInit {
 
 	public static final Properties SPAWN_EGG_PROPERTIES = new Item.Properties()
-			.group(StoryMobsItemGroup.STORY_MOBS_ITEM_GROUP);
+			.tab(StoryMobsItemGroup.STORY_MOBS_ITEM_GROUP);
 
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, StoryMobs.MODID);
 
 	public static final RegistryObject<Item> STORY_MOBS_LOGO = ItemInit.ITEMS.register("storymobs_logo",
-			() -> new Item(new Item.Properties().group(null)));
+			() -> new Item(new Item.Properties().tab(null)));
 
 	// Spawn eggs
 	public static final RegistryObject<Item> CREEDER_SPAWN_EGG = ITEMS.register("creeder_spawn_egg",

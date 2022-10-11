@@ -4,66 +4,66 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.SpiderEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class IcySpiderEntity extends SpiderEntity {
+public class IcySpiderEntity extends Spider {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public IcySpiderEntity(EntityType<? extends IcySpiderEntity> p_i50214_1_, World p_i50214_2_) {
+	public IcySpiderEntity(EntityType<? extends IcySpiderEntity> p_i50214_1_, Level p_i50214_2_) {
 		super((EntityType) p_i50214_1_, p_i50214_2_);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return SpiderEntity.func_234305_eI_().createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D);
+	public static AttributeSupplier.Builder getAttributes() {
+		return Spider.createAttributes().add(Attributes.MAX_HEALTH, 15.0D)
+				.add(Attributes.FOLLOW_RANGE, 20.0D);
 	}
 
-	public boolean attackEntityAsMob(Entity p_70652_1_) {
-		if (super.attackEntityAsMob(p_70652_1_)) {
+	public boolean doHurtTarget(Entity p_70652_1_) {
+		if (super.doHurtTarget(p_70652_1_)) {
 			int lvt_2_1_ = 15;
 
 			if (lvt_2_1_ > 0 && p_70652_1_ instanceof LivingEntity) {
-				((LivingEntity) p_70652_1_).addPotionEffect(new EffectInstance(Effects.SLOWNESS, lvt_2_1_ * 30, 3));
+				((LivingEntity) p_70652_1_).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, lvt_2_1_ * 30, 3));
 			}
 		}
 		return true;
 	}
 
 	@Nullable
-	public ILivingEntityData onInitialSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_,
-			SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_213386_1_, DifficultyInstance p_213386_2_,
+			MobSpawnType p_213386_3_, @Nullable SpawnGroupData p_213386_4_, @Nullable CompoundTag p_213386_5_) {
 		return p_213386_4_;
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+	protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
 		return 0.50F;
 	}
 	
-	public static boolean canIcySpiderSpawn(EntityType<IcySpiderEntity> animal, IWorld world, SpawnReason reason,
+	public static boolean canIcySpiderSpawn(EntityType<IcySpiderEntity> animal, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
-		BlockState state = world.getBlockState(pos.down());
-		return (state.isIn(Blocks.RED_SAND) || (state.isIn(Blocks.ICE)) || (state.isIn(Blocks.BLUE_ICE))
-				|| (state.isIn(Blocks.FROSTED_ICE)) || (state.isIn(Blocks.PACKED_ICE)) || (state.isIn(Blocks.SNOW))
-				|| (state.isIn(Blocks.SNOW_BLOCK)) || (state.isIn(Blocks.DIRT)) || (state.isIn(Blocks.GRASS_BLOCK)));
+		BlockState state = world.getBlockState(pos.below());
+		return (state.is(Blocks.RED_SAND) || (state.is(Blocks.ICE)) || (state.is(Blocks.BLUE_ICE))
+				|| (state.is(Blocks.FROSTED_ICE)) || (state.is(Blocks.PACKED_ICE)) || (state.is(Blocks.SNOW))
+				|| (state.is(Blocks.SNOW_BLOCK)) || (state.is(Blocks.DIRT)) || (state.is(Blocks.GRASS_BLOCK)));
 	}
 }

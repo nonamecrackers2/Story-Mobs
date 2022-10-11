@@ -1,11 +1,11 @@
 modLoader="javafml"  
-loaderVersion="[35,)"  
+loaderVersion="[40,)"  
 license="MIT License"   
 issueTrackerURL=""  
  
 [[mods]]  
 modId="storymobs"  
-version="1.16.5-1.0.1"  
+version="1.18.2-1.0"  
 displayName="Story Mod"  
 updateJSONURL=""  
 displayURL="https://www.curseforge.com/minecraft/mc-mods/story-mobs"  

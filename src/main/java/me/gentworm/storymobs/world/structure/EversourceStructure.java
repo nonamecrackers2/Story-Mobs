@@ -9,84 +9,86 @@ import me.gentworm.storymobs.StoryMobs;
 import me.gentworm.storymobs.entity.EversourceEntity;
 import me.gentworm.storymobs.init.EntityInit;
 import me.gentworm.storymobs.init.StoryMobsStructures;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
-import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-public class EversourceStructure extends Structure<NoFeatureConfig> {
+import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
 
-	public EversourceStructure(Codec<NoFeatureConfig> p_i51440_1_) {
+public class EversourceStructure extends StructureFeature<NoneFeatureConfiguration> {
+
+	public EversourceStructure(Codec<NoneFeatureConfiguration> p_i51440_1_) {
 		super(p_i51440_1_);
 	}
 
 	@Override
-	public String getStructureName() {
+	public String getFeatureName() {
 		return StoryMobs.MODID + ":eversource_structure";
 	}
 
 	// Late decoration stage after vegetal decoration so that the structure don't
 	// got trees
 	@Override
-	public GenerationStage.Decoration getDecorationStage() {
-		return GenerationStage.Decoration.TOP_LAYER_MODIFICATION;
+	public GenerationStep.Decoration step() {
+		return GenerationStep.Decoration.TOP_LAYER_MODIFICATION;
 	}
 	
 	@Override
-    protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeProvider, long seed, SharedSeedRandom random, int x, int z, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
+    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeProvider, long seed, WorldgenRandom random, int x, int z, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration config) {
         random.setLargeFeatureSeed(seed, x, z);
         return random.nextDouble() < 0.003;
     }
 
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() {
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return EversourceStructure.Start::new;
 	}
 
-	public static class Start extends StructureStart<NoFeatureConfig> {
-		public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ,
-				MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
+	public static class Start extends StructureStart<NoneFeatureConfiguration> {
+		public Start(StructureFeature<NoneFeatureConfiguration> structureIn, int chunkX, int chunkZ,
+				BoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
 			super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator generator,
-				TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
-			Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
+		public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator,
+				StructureManager templateManagerIn, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
+			Rotation rotation = Rotation.values()[this.random.nextInt(Rotation.values().length)];
 			int x = (chunkX << 4) + 7;
 			int z = (chunkZ << 4) + 7;
 			int surfaceY = Math.max(
-					generator.getNoiseHeightMinusOne(x + 12, z + 12, Heightmap.Type.WORLD_SURFACE_WG) - 1,
-					generator.getGroundHeight() - 1);
+					generator.getFirstOccupiedHeight(x + 12, z + 12, Heightmap.Types.WORLD_SURFACE_WG) - 1,
+					generator.getSpawnHeight() - 1);
 			BlockPos blockpos = new BlockPos(x, surfaceY, z);
-			Piece.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
-			this.recalculateStructureSize();
+			Piece.start(templateManagerIn, blockpos, rotation, this.pieces, this.random);
+			this.calculateBoundingBox();
 		}
 	}
 
@@ -94,7 +96,7 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 		private ResourceLocation resourceLocation;
 		private Rotation rotation;
 
-		public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos,
+		public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos,
 				Rotation rotationIn) {
 			super(StoryMobsStructures.EVERSOURCE_PIECE_TYPE, 0);
 			this.resourceLocation = resourceLocationIn;
@@ -103,7 +105,7 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 			this.setupPiece(templateManagerIn);
 		}
 
-		public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
+		public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
 			super(StoryMobsStructures.EVERSOURCE_PIECE_TYPE, tagCompound);
 			this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
 			this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
@@ -111,70 +113,70 @@ public class EversourceStructure extends Structure<NoFeatureConfig> {
 
 		}
 
-		public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation,
+		public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation,
 				List<StructurePiece> pieceList, Random random) {
 			int x = pos.getX();
 			int z = pos.getZ();
 			int y = pos.getY() + 75;
 			BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-			BlockPos blockpos = rotationOffSet.add(x, y, z);
+			BlockPos blockpos = rotationOffSet.offset(x, y, z);
 			pieceList.add(new Piece(templateManager,
 					new ResourceLocation(StoryMobs.MODID, "eversource_structure/eversource_structure"), blockpos,
 					rotation));
 
 		}
 
-		private void setupPiece(TemplateManager templateManager) {
-			Template template = templateManager.getTemplateDefaulted(this.resourceLocation);
-			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation)
+		private void setupPiece(StructureManager templateManager) {
+			StructureTemplate template = templateManager.getOrCreate(this.resourceLocation);
+			StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation)
 					.setMirror(Mirror.NONE);
 
 			this.setup(template, this.templatePosition, placementsettings);
 		}
 
 		@Override
-		protected void readAdditional(CompoundNBT tagCompound) {
-			super.readAdditional(tagCompound);
+		protected void addAdditionalSaveData(CompoundTag tagCompound) {
+			super.addAdditionalSaveData(tagCompound);
 			tagCompound.putString("Template", this.resourceLocation.toString());
 			tagCompound.putString("Rot", this.rotation.name());
 
 		}
 
 		@Override
-		public boolean func_230383_a_(ISeedReader seedReader, StructureManager structureManager,
-				ChunkGenerator chunkGenerator, Random randomIn, MutableBoundingBox structureBoundingBoxIn,
+		public boolean postProcess(WorldGenLevel seedReader, StructureFeatureManager structureManager,
+				ChunkGenerator chunkGenerator, Random randomIn, BoundingBox structureBoundingBoxIn,
 				ChunkPos chunkPos, BlockPos pos) {
-			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation)
-					.setMirror(Mirror.NONE).addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK);
+			StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation)
+					.setMirror(Mirror.NONE).addProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR);
 			BlockPos blockpos = BlockPos.ZERO;
-			this.templatePosition.add(Template.transformedBlockPos(placementsettings,
+			this.templatePosition.offset(StructureTemplate.calculateRelativePosition(placementsettings,
 					new BlockPos(-blockpos.getX(), 0, -blockpos.getZ())));
 
-			return super.func_230383_a_(seedReader, structureManager, chunkGenerator, randomIn, structureBoundingBoxIn,
+			return super.postProcess(seedReader, structureManager, chunkGenerator, randomIn, structureBoundingBoxIn,
 					chunkPos, pos);
 		}
 
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand,
+				BoundingBox sbb) {
 			if ("chest".equals(function)) {
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-				TileEntity tileentity = worldIn.getTileEntity(pos.down());
-				if (tileentity instanceof ChestTileEntity) {
-					((ChestTileEntity) tileentity).setLootTable(
+				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+				BlockEntity tileentity = worldIn.getBlockEntity(pos.below());
+				if (tileentity instanceof ChestBlockEntity) {
+					((ChestBlockEntity) tileentity).setLootTable(
 							new ResourceLocation(StoryMobs.MODID, "chests/eversource_structure/eversource"),
 							rand.nextLong());
 				}
 			}
 			if ("eversource_entity".equals(function)) {
-				EversourceEntity entity = EntityInit.EVERSOURCE_ENTITY.get().create(worldIn.getWorld());
+				EversourceEntity entity = EntityInit.EVERSOURCE_ENTITY.get().create(worldIn.getLevel());
 				if (entity != null) {
-					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-					entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null,
+					entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					entity.finalizeSpawn(worldIn, worldIn.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null,
 							null);
-					worldIn.addEntity(entity);
+					worldIn.addFreshEntity(entity);
 				}
-				worldIn.setBlockState(pos, Blocks.OAK_PLANKS.getDefaultState(), 2);
+				worldIn.setBlock(pos, Blocks.OAK_PLANKS.defaultBlockState(), 2);
 			}
 		}
 	}

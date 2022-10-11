@@ -4,45 +4,45 @@ import java.util.Random;
 
 import me.gentworm.storymobs.StoryMobs;
 import me.gentworm.storymobs.init.ItemInit;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class EversourceEntity extends AnimalEntity {
-	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(
-			new IItemProvider[] { Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS });
+public class EversourceEntity extends Animal {
+	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(
+			new ItemLike[] { Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS });
 
 	// Don't let it spawn elder guardians, evokers, or ravagers.
 	Item[] eggItems = { ItemInit.EVERSOURCE_SPAWN_EGG.get(), Items.BAT_SPAWN_EGG, Items.BEE_SPAWN_EGG,
@@ -76,107 +76,107 @@ public class EversourceEntity extends AnimalEntity {
 	public int timeUntilNextEgg;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public EversourceEntity(EntityType<? extends EversourceEntity> p_i50282_1_, World p_i50282_2_) {
+	public EversourceEntity(EntityType<? extends EversourceEntity> p_i50282_1_, Level p_i50282_2_) {
 		super((EntityType) p_i50282_1_, p_i50282_2_);
-		this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
-		setPathPriority(PathNodeType.WATER, 0.0F);
+		this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
+		setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
 	}
 
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, (Goal) new SwimGoal((MobEntity) this));
-		this.goalSelector.addGoal(1, (Goal) new PanicGoal((CreatureEntity) this, 1.4D));
+		this.goalSelector.addGoal(0, (Goal) new FloatGoal((Mob) this));
+		this.goalSelector.addGoal(1, (Goal) new PanicGoal((PathfinderMob) this, 1.4D));
 		this.goalSelector.addGoal(2, (Goal) new BreedGoal(this, 1.0D));
-		this.goalSelector.addGoal(3, (Goal) new TemptGoal((CreatureEntity) this, 1.0D, false, TEMPTATION_ITEMS));
+		this.goalSelector.addGoal(3, (Goal) new TemptGoal((PathfinderMob) this, 1.0D, false, TEMPTATION_ITEMS));
 		this.goalSelector.addGoal(4, (Goal) new FollowParentGoal(this, 1.1D));
-		this.goalSelector.addGoal(5, (Goal) new WaterAvoidingRandomWalkingGoal((CreatureEntity) this, 1.0D));
-		this.goalSelector.addGoal(6, (Goal) new LookAtGoal((MobEntity) this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(7, (Goal) new LookRandomlyGoal((MobEntity) this));
+		this.goalSelector.addGoal(5, (Goal) new WaterAvoidingRandomStrollGoal((PathfinderMob) this, 1.0D));
+		this.goalSelector.addGoal(6, (Goal) new LookAtPlayerGoal((Mob) this, Player.class, 6.0F));
+		this.goalSelector.addGoal(7, (Goal) new RandomLookAroundGoal((Mob) this));
 	}
 
-	protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+	protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
 		return (p_213348_2_.height * 0.92F);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+	public static AttributeSupplier.Builder getAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 		this.oFlap = this.wingRotation;
 		this.oFlapSpeed = this.destPos;
 		this.destPos = (float) (this.destPos + (this.onGround ? -1 : 4) * 0.3D);
-		this.destPos = MathHelper.clamp(this.destPos, 0.0F, 1.0F);
+		this.destPos = Mth.clamp(this.destPos, 0.0F, 1.0F);
 		if (!this.onGround && this.wingRotDelta < 1.0F)
 			this.wingRotDelta = 1.0F;
 		this.wingRotDelta = (float) (this.wingRotDelta * 0.9D);
-		Vector3d lvt_1_1_ = getMotion();
+		Vec3 lvt_1_1_ = getDeltaMovement();
 		if (!this.onGround && lvt_1_1_.y < 0.0D)
-			setMotion(lvt_1_1_.mul(1.0D, 0.6D, 1.0D));
+			setDeltaMovement(lvt_1_1_.multiply(1.0D, 0.6D, 1.0D));
 		this.wingRotation += this.wingRotDelta * 2.0F;
-		if (!this.world.isRemote && isAlive() && this.timeUntilNextEgg > 0) {
+		if (!this.level.isClientSide && isAlive() && this.timeUntilNextEgg > 0) {
 			this.timeUntilNextEgg--;
 			if (this.timeUntilNextEgg == 0) {
-				playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F,
-						(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+				playSound(SoundEvents.CHICKEN_EGG, 1.0F,
+						(this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
 				Random rand = new Random();
 
 				StoryMobs.LOGGER.info("The eversource has layed a spawn egg");
 				int topNumber = 61;
 				int nextInteger = rand.nextInt(topNumber);
-				entityDropItem(eggItems[nextInteger]);
-				this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
+				spawnAtLocation(eggItems[nextInteger]);
+				this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
 			}
 		}
 	}
 
-	public boolean onLivingFall(float p_225503_1_, float p_225503_2_) {
+	public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
 		return false;
 	}
 
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_CHICKEN_AMBIENT;
+		return SoundEvents.CHICKEN_AMBIENT;
 	}
 
 	protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
-		return SoundEvents.ENTITY_CHICKEN_HURT;
+		return SoundEvents.CHICKEN_HURT;
 	}
 
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_CHICKEN_DEATH;
+		return SoundEvents.CHICKEN_DEATH;
 	}
 
 	protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
-		playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
+		playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld arg0, AgeableEntity arg1) {
+	public AgableMob getBreedOffspring(ServerLevel arg0, AgableMob arg1) {
 		return null;
 	}
 
-	public boolean isBreedingItem(ItemStack p_70877_1_) {
+	public boolean isFood(ItemStack p_70877_1_) {
 		return TEMPTATION_ITEMS.test(p_70877_1_);
 	}
 
-	protected int getExperiencePoints(PlayerEntity p_70693_1_) {
+	protected int getExperienceReward(Player p_70693_1_) {
 		return 2;
 	}
 
-	public void readAdditional(CompoundNBT p_70037_1_) {
-		super.readAdditional(p_70037_1_);
+	public void readAdditionalSaveData(CompoundTag p_70037_1_) {
+		super.readAdditionalSaveData(p_70037_1_);
 		if (p_70037_1_.contains("EggLayTime"))
 			this.timeUntilNextEgg = p_70037_1_.getInt("EggLayTime");
 	}
 
-	public void writeAdditional(CompoundNBT p_213281_1_) {
-		super.writeAdditional(p_213281_1_);
+	public void addAdditionalSaveData(CompoundTag p_213281_1_) {
+		super.addAdditionalSaveData(p_213281_1_);
 		p_213281_1_.putInt("EggLayTime", this.timeUntilNextEgg);
 	}
 
-	public boolean canDespawn(double distanceFromPlayer) {
+	public boolean removeWhenFarAway(double distanceFromPlayer) {
 		return false;
 	}
 }
